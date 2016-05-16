@@ -6,20 +6,16 @@ var pikePlace = {
   maxCustomersHour: 35,
   avgCupsPerCustomer: 1.2,
   avgPoundsPerCustomer: 0.34,
-  beansPerHour: [], // done
-  customersPerHour: [], // done
-  cupsPerHour: [], // done
+  beansPerHour: [], // beans
+  customersPerHour: [], // customers served per hour
+  cupsPerHour: [], // cups sold per hour
   beansNeededForCupsPerHour: [], //done
-  poundPackagesPerHour: [],
+  poundPackagesPerHour: [], // done
   dailyCustomersTotal: 0,
   dailyCupsTotal: 0,
   dailyPoundPackagesTotal: 0,
   dailyBeansNeeded: 0,
-/*By combining the total beans needed to make cups 16 cups = 1lb, and the total beans that are sold by the pound for each location, Jo can ensure that an adequate amound of beans are stored at each location.
-
-(num cups per hour)/16 = lbs needed per hour
-
-*/
+  employeesNeeded: [],
 
   calcCustomersPerHour: function(min,max) {
     for (var i = 0; i < hours.length; i++ ) {
@@ -29,6 +25,7 @@ var pikePlace = {
     }
   },
   calcCupsPerHour: function(){
+    // num of cups sold per hour = avg cups per customer * num of customer per hour
     for (var i = 0; i < hours.length; i++){
       var cupsSold = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
       this.cupsPerHour.push(cupsSold);
@@ -36,7 +33,7 @@ var pikePlace = {
     }
   },
   calcBeansPerHour: function(){
-    // number of customers per hour * average pounds per customer
+    // avg beans per hour = number of customers per hour * average pounds per customer
     for (var i = 0; i < hours.length; i++ ){
       var beans = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
       this.beansPerHour.push(beans);
@@ -44,17 +41,25 @@ var pikePlace = {
     }
   },
   calcBeansNeededForCupPerHour: function(){
-    // (num cups per hour) / 16 = lbs needed per hour
+    // beans needed for cups = (num cups per hour) / 16
     for (var i = 0; i < hours.length; i++){
-      var beansCup = Math.ceil(this.cupsPerHour[i] / 16);
+      var beansCup = Math.round(((this.cupsPerHour[i] / 16) * 10) / 10);
       this.beansNeededForCupsPerHour.push(beansCup);
     }
   },
   calcPoundPackagesPerHour: function(){
-    //lbs needed per hour =  # of cups served in an hour / 16
+    //lbs needed per hour =  average pounds per customer * num of customers per hour
     for (var i = 0; i < hours.length; i++){
-      var lbsHour = Math.ceil(this.beansNeededForCupsPerHour[i] / 16);
+      var lbsHour = Math.round(((this.avgPoundsPerCustomer * this.customersPerHour[i]) * 10) / 10);
       this.poundPackagesPerHour.push(lbsHour);
+    }
+  },
+
+  calcNumberOfEmployees: function(){
+    //number of customers per hour * 2 equals the number of minutes required to serve them coffee. Divide the number of minutes required by the num minutes in an hour to equal the number of employees needed.
+    for (var i = 0; i < hours.length; i++){
+      var employees = Math.ceil((this.customersPerHour[i] * 2) / 60);
+      this.employeesNeeded.push(employees);
     }
   },
 
@@ -75,11 +80,15 @@ var pikePlace = {
 };
 
 pikePlace.render();
+/*
+pikePlace.calcCustomersPerHour();
 pikePlace.calcCupsPerHour();
 pikePlace.calcBeansPerHour();
 pikePlace.calcBeansNeededForCupPerHour();
 pikePlace.calcPoundPackagesPerHour();
+pikePlace.calcNumberOfEmployees();
 console.log(pikePlace.cupsPerHour);
 console.log(pikePlace.beansPerHour);
 console.log(pikePlace.beansNeededForCupsPerHour);
 console.log(pikePlace.poundPackagesPerHour);
+console.log(pikePlace.employeesNeeded); */
