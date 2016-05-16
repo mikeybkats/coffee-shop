@@ -6,24 +6,61 @@ var pikePlace = {
   maxCustomersHour: 35,
   avgCupsPerCustomer: 1.2,
   avgPoundsPerCustomer: 0.34,
-  beansPerHour: [],
-  customersPerHour: [],
-  cupsPerHour: [],
-  beansNeededForCupsPerHour: [],
+  beansPerHour: [], // done
+  customersPerHour: [], // done
+  cupsPerHour: [], // done
+  beansNeededForCupsPerHour: [], //done
   poundPackagesPerHour: [],
   dailyCustomersTotal: 0,
   dailyCupsTotal: 0,
   dailyPoundPackagesTotal: 0,
   dailyBeansNeeded: 0,
+/*By combining the total beans needed to make cups 16 cups = 1lb, and the total beans that are sold by the pound for each location, Jo can ensure that an adequate amound of beans are stored at each location.
+
+(num cups per hour)/16 = lbs needed per hour
+
+*/
+
   calcCustomersPerHour: function(min,max) {
-    for (var i = 0; i < hours.length; i ++) {
+    for (var i = 0; i < hours.length; i++ ) {
       var customers = Math.floor(Math.random() * (max - min + 1)) + min;
       this.customersPerHour.push(customers);
       this.dailyCustomersTotal += customers;
     }
   },
+  calcCupsPerHour: function(){
+    for (var i = 0; i < hours.length; i++){
+      var cupsSold = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
+      this.cupsPerHour.push(cupsSold);
+      this.dailyCupsTotal += cupsSold;
+    }
+  },
+  calcBeansPerHour: function(){
+    // number of customers per hour * average pounds per customer
+    for (var i = 0; i < hours.length; i++ ){
+      var beans = Math.ceil(this.customersPerHour[i] * this.avgPoundsPerCustomer);
+      this.beansPerHour.push(beans);
+      this.dailyBeansNeeded += beans;
+    }
+  },
+  calcBeansNeededForCupPerHour: function(){
+    // (num cups per hour) / 16 = lbs needed per hour
+    for (var i = 0; i < hours.length; i++){
+      var beansCup = Math.ceil(this.cupsPerHour[i] / 16);
+      this.beansNeededForCupsPerHour.push(beansCup);
+    }
+  },
+  calcPoundPackagesPerHour: function(){
+    //lbs needed per hour =  # of cups served in an hour / 16
+    for (var i = 0; i < hours.length; i++){
+      var lbsHour = Math.ceil(this.beansNeededForCupsPerHour[i] / 16);
+      this.poundPackagesPerHour.push(lbsHour);
+    }
+  },
+
   render: function() {
     pikePlace.calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
+
     // call all of the other methods that calc data
     var ulElement = document.getElementById('pike');
     for (var i = 0; i < hours.length; i++) {
@@ -36,4 +73,13 @@ var pikePlace = {
     }
   }
 };
+
 pikePlace.render();
+pikePlace.calcCupsPerHour();
+pikePlace.calcBeansPerHour();
+pikePlace.calcBeansNeededForCupPerHour();
+pikePlace.calcPoundPackagesPerHour();
+console.log(pikePlace.cupsPerHour);
+console.log(pikePlace.beansPerHour);
+console.log(pikePlace.beansNeededForCupsPerHour);
+console.log(pikePlace.poundPackagesPerHour);
