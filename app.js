@@ -1,5 +1,5 @@
-var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm:', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm:'];
-
+var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
+// create a constructor that pulls the store data from each store
 var pikePlace = {
   locationName: 'Pike Place Market',
   minCustomersHour: 14,
@@ -16,6 +16,8 @@ var pikePlace = {
   dailyPoundPackagesTotal: 0,
   dailyBeansNeeded: 0,
   employeesNeeded: [],
+
+// call each individual store with the new CoffeeStore function
 
   calcCustomersPerHour: function(min,max) {
     for (var i = 0; i < hours.length; i++ ) {
@@ -90,11 +92,11 @@ var pikePlace = {
     ulElement.appendChild(liElement);
 
     var liElement = document.createElement('li');
-    liElement.textContent = 'Total pound packages sold at Pike Place Market: ' + pikePlace.dailyPoundPackagesTotal;
+    liElement.textContent = 'Total pound packages sold at Pike Place Market: ' + Math.round(pikePlace.dailyPoundPackagesTotal * 10) / 10;
     ulElement.appendChild(liElement);
 
     var liElement = document.createElement('li');
-    liElement.textContent = 'Total pounds of beans needed at Pike Place Market: ' + pikePlace.dailyBeansNeeded;
+    liElement.textContent = 'Total pounds of beans needed at Pike Place Market: ' + Math.round(pikePlace.dailyBeansNeeded * 10) / 10;
     ulElement.appendChild(liElement);
   },
 };
@@ -103,7 +105,6 @@ var pikePlace = {
 Total cups sold at Pike Place Market: 189
 Total pound packages sold at Pike Place Market: 26
 Total pounds of beans needed at Pike Place Market: 38.4 */
-
 
 pikePlace.render();
 
