@@ -81,6 +81,19 @@ function calcNumberOfEmployees(customersPerHour){
   }
   return numEmployees;
 }
+function calcLocTotDaily(arrayInput){
+  var total = 0;
+  for (var i = 0; i < arrayInput.length; i++){
+    var total = total + arrayInput[i];
+  }
+  console.log(total);
+  return total;
+}
+function totalsDailyPerHour (){
+  // two loops:
+  // one to grab the line
+  // one to grab the first item of the line
+}
 
 pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
 pikePlace.cupsPerHour = calcCupsPerHour(pikePlace.customersPerHour, pikePlace.avgCupsPerCustomer);
@@ -141,7 +154,7 @@ function beansNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDaily(pikePlace.beansPerHour);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -158,7 +171,7 @@ function beansNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDaily(capHill.beansPerHour);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -175,7 +188,7 @@ function beansNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDaily(spl.beansPerHour);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -192,7 +205,7 @@ function beansNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDaily(slu.beansPerHour);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -209,7 +222,7 @@ function beansNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDaily(sta.beansPerHour);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
