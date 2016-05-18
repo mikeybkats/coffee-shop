@@ -1,10 +1,15 @@
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
-
 var pikePlace = new CoffeeKiosk('Pike Place Market', 14, 35, 1.2, .34);
 var capHill = new CoffeeKiosk('Capitol Hill', 12, 28, 3.2, .03);
 var spl = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6, .02);
 var slu = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, .04);
 var sta = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, .41);
+var kioskTable = document.getElementById(('kioskTable'));
+var employeesTable = document.getElementById(('employeesTable'));
+var trElement = document.createElement('tr');
+var headings = [' '] + hours;
+var pikePlaceRow = [];
+var arrayTableContent = [];
 
 function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer){
   this.locationName = locationName;
@@ -74,6 +79,7 @@ function calcNumberOfEmployees(customersPerHour){
     var employees = Math.ceil((customersPerHour[i] * 2) / 60);
     numEmployees.push(employees);
   }
+  return numEmployees;
 }
 
 pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
@@ -111,94 +117,244 @@ sta.poundPackagesPerHour = calcPoundPackagesPerHour(sta.customersPerHour, sta.av
 sta.beansPerHour = calcBeansPerHour(sta.beansNeededForCupsPerHour, sta.poundPackagesPerHour);
 sta.employeesNeeded = calcNumberOfEmployees(sta.customersPerHour);
 
-var kioskTable = document.getElementById(('kioskTable'));
-var trElement = document.createElement('tr');
-var headings = [' '] + hours;
-var pikePlaceRow = [];
-var arrayTableContent = [];
-
-// create a table to post the store data
-// table row one - hours
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-trElement.appendChild(thElement);
-for (var i = 0; i < headings.length; i++){
+function beansNeededTable(){
+  var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
-  thElement.textContent = hours[i];
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
 
-// Table row two - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'Pike Place Market';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
   var thElement = document.createElement('th');
-  thElement.textContent = pikePlace.beansPerHour[i];
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
+  thElement.textContent = 'Totals';
 
-// Table row three - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'Capitol Hill';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
+  for (var i = 0; i < headings.length; i++){
+    var thElement = document.createElement('th');
+    thElement.textContent = hours[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row two - bean data
+  var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
-  thElement.textContent = capHill.beansPerHour[i];
+  thElement.textContent = 'Pike Place Market';
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
 
-// Table row four - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'Seattle Public Library';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
   var thElement = document.createElement('th');
-  thElement.textContent = spl.beansPerHour[i];
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
+  thElement.textContent = 'Tots';
 
-// Table row five - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'South Lake Union';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = pikePlace.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row three - bean data
+  var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
-  thElement.textContent = slu.beansPerHour[i];
+  thElement.textContent = 'Capitol Hill';
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
 
-// Table row six - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'Sea Tac Airport';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
   var thElement = document.createElement('th');
-  thElement.textContent = sta.beansPerHour[i];
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
+  thElement.textContent = 'Tots';
 
-// Table row seven - bean data
-var trElement = document.createElement('tr');
-var thElement = document.createElement('th');
-thElement.textContent = 'Totals';
-trElement.appendChild(thElement);
-for (var i = 0; i < hours.length; i++) {
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = capHill.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row four - bean data
+  var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
-  thElement.textContent = pikePlace.beansPerHour[i];
+  thElement.textContent = 'Seattle Public Library';
   trElement.appendChild(thElement);
-}
-kioskTable.appendChild(trElement);
 
-console.log(pikePlace);
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = spl.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row five - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'South Lake Union';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = slu.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row six - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Sea Tac Airport';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = sta.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+
+  // Table row seven - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Totals';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = pikePlace.beansPerHour[i];
+    trElement.appendChild(thElement);
+  }
+  kioskTable.appendChild(trElement);
+}
+function baristasNeededTable(){
+  // create a table to post the store data
+  // table row one - hours
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Totals';
+
+  for (var i = 0; i < headings.length; i++){
+    var thElement = document.createElement('th');
+    thElement.textContent = hours[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row two - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Pike Place Market';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = pikePlace.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row three - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Capitol Hill';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = capHill.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row four - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Seattle Public Library';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = spl.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row five - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'South Lake Union';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = slu.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row six - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Sea Tac Airport';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = sta.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+
+  // Table row seven - bean data
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  thElement.textContent = 'Totals';
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Tots';
+
+  for (var i = 0; i < hours.length; i++) {
+    var thElement = document.createElement('th');
+    thElement.textContent = pikePlace.employeesNeeded[i];
+    trElement.appendChild(thElement);
+  }
+  employeesTable.appendChild(trElement);
+}
+
+beansNeededTable();
+baristasNeededTable();
