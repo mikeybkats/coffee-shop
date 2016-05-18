@@ -87,11 +87,19 @@ function calcLocTotDaily(arrayInput){
     var total = total + arrayInput[i];
   }
   console.log(total);
-  return total;
+  return parseFloat((total).toFixed(1));
+}
+function calcLocTotDailyBaristas(arrayInput){
+  var total = 0;
+  for (var i = 0; i < arrayInput.length; i++){
+    var total = total + arrayInput[i];
+  }
+  console.log(total);
+  return parseFloat((total / 7.5).toFixed(1));
 }
 function totalsDailyPerHour (){
   // two loops:
-  // one to grab the line
+  // loop through the rows - one to grab the line
   // one to grab the first item of the line
 }
 
@@ -131,6 +139,8 @@ sta.beansPerHour = calcBeansPerHour(sta.beansNeededForCupsPerHour, sta.poundPack
 sta.employeesNeeded = calcNumberOfEmployees(sta.customersPerHour);
 
 function beansNeededTable(){
+  // table row one
+  //function beansNeededTableR1(){
   var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
@@ -145,7 +155,7 @@ function beansNeededTable(){
     trElement.appendChild(thElement);
   }
   kioskTable.appendChild(trElement);
-
+  //}
   // Table row two - bean data
   var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
@@ -274,7 +284,7 @@ function baristasNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDailyBaristas(pikePlace.employeesNeeded);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -291,7 +301,7 @@ function baristasNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDailyBaristas(capHill.employeesNeeded);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -308,7 +318,7 @@ function baristasNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDailyBaristas(spl.employeesNeeded);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -325,7 +335,7 @@ function baristasNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDailyBaristas(slu.employeesNeeded);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
@@ -342,7 +352,7 @@ function baristasNeededTable(){
 
   var thElement = document.createElement('th');
   trElement.appendChild(thElement);
-  thElement.textContent = 'Tots';
+  thElement.textContent = calcLocTotDailyBaristas(sta.employeesNeeded);
 
   for (var i = 0; i < hours.length; i++) {
     var thElement = document.createElement('th');
