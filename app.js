@@ -379,6 +379,42 @@ function baristasNeededTable(){
   employeesTable.appendChild(trElement);
 }
 
+function printTable (){
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Totals';
+
+  for (var i = 0; i < headings.length; i++){
+    var thElement = document.createElement('th');
+    thElement.textContent = hours[i];
+    trElement.appendChild(thElement);
+  }
+  newTable.appendChild(trElement);
+
+  for ( var j = 0; j < allKiosks.length; j++){
+    var coffeeData = [allKiosks[j].customersPerHour, allKiosks[j].cupsPerHour, allKiosks[j].beansNeededForCupsPerHour, allKiosks[j].poundPackagesPerHour, allKiosks[j].beansPerHour, allKiosks[j].employeesNeeded ];
+    var trElement = document.createElement('tr');
+    var thElement = document.createElement('th');
+    thElement.textContent = allKiosks[j].locationName;
+    trElement.appendChild(thElement);
+
+    var thElement = document.createElement('th');
+    trElement.appendChild(thElement);
+    thElement.textContent = allKiosks[j].dailyHourlyBeans;
+
+    for (var i = 0; i < hours.length; i++){
+      var thElement = document.createElement ('th');
+      thElement.textContent = allKiosks[j].beansPerHour[i];
+      trElement.appendChild(thElement);
+    }
+    newTable.appendChild(trElement);
+  }
+}
+
 function submitRowToTable(event) {
   console.log(event);
   event.preventDefault();
@@ -402,8 +438,8 @@ function submitRowToTable(event) {
   //create function to print all kiosks from an array of kiosks
 }
 
-rowForm.addEventListener('submit', submitRowToTable);
-
 beansNeededTable();
 baristasNeededTable();
 printTable();
+
+rowForm.addEventListener('submit', submitRowToTable);

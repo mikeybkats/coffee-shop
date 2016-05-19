@@ -8,7 +8,6 @@ var kioskTable = document.getElementById('kioskTable');
 var employeesTable = document.getElementById('employeesTable');
 var newTable = document.getElementById('newTable');
 var newLocationForm = document.getElementById('rowForm');
-//var trElement = document.createElement('tr');
 var headings = [' '] + hours;
 var allKiosks = [pikePlace, capHill, spl, slu, sta];
 var baristaHoursTotals = [];
@@ -31,6 +30,49 @@ function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsP
   this.dailyBeansNeeded = 0;
   this.employeesNeeded = [];
   this.dailyHourlyBeans = 0;
+  // this.customersPerHour = function(){
+  //   var custPerHour = [];
+  //   for (var i = 0; i < hours.length; i++ ) {
+  //     var customers = Math.floor(Math.random() * (this.maxCustomersHour - this.minCustomersHour + 1)) + this.minCustomersHour;
+  //     custPerHour.push(customers);
+  //   }
+  //   return custPerHour;
+  // };
+  // this.cupsPerHour = function(){
+  //   var cupsHrArray = [];
+  //   for (var i = 0; i < hours.length; i++){
+  //     var cupsSold = Math.ceil(this.customersPerHour[i] * this.avgCupsPerCustomer);
+  //     cupsHrArray.push(cupsSold);
+  //   }
+  //   return cupsHrArray;
+  // };
+  // this.beansNeededForCupsPerHour = function(){
+  //   // beans needed for cups = (num cups per hour) / 16
+  //   var beansForCups = [];
+  //   for (var i = 0; i < hours.length; i++){
+  //     var beansCup = Math.round((this.cupsPerHour[i] / 16) * 10) / 10;
+  //     beansForCups.push(beansCup);
+  //   }
+  //   return beansForCups;
+  // };
+  // this.poundPackagesPerHour = function(){
+  //   //lbs needed per hour =  average pounds per customer * num of customers per hour
+  //   var dailyPoundsSold = [];
+  //   for (var i = 0; i < hours.length; i++){
+  //     var lbsHour = Math.round((this.customersPerHour[i] * this.avgPoundsPerCustomer) * 10) / 10;
+  //     dailyPoundsSold.push(lbsHour);
+  //   }
+  //   return dailyPoundsSold;
+  // };
+  // this.beansPerHour = function (){
+  //   // lbs of beans sold per hour = number of customers per hour * average pounds per customer + the beans needed for cups.
+  //   var beansPerHour = [];
+  //   for (var i = 0; i < hours.length; i++){
+  //     var allBeans = Math.round((this.beansNeededForCupsPerHour[i] + this.poundPackagesPerHour[i]) * 10) / 10;
+  //     beansPerHour.push(allBeans);
+  //   }
+  //   return beansPerHour;
+  // };
 };
 function calcCustomersPerHour(min, max){
   var custPerHour = [];
@@ -142,6 +184,7 @@ sta.poundPackagesPerHour = calcPoundPackagesPerHour(sta.customersPerHour, sta.av
 sta.beansPerHour = calcBeansPerHour(sta.beansNeededForCupsPerHour, sta.poundPackagesPerHour);
 sta.employeesNeeded = calcNumberOfEmployees(sta.customersPerHour);
 sta.dailyHourlyBeans = calcLocTotDaily(sta.beansPerHour);
+
 function beansNeededTable(){
   // table row one
   //function beansNeededTableR1(){
@@ -401,6 +444,7 @@ function printTable (){
   newTable.appendChild(trElement);
 
   for ( var j = 0; j < allKiosks.length; j++){
+
     var trElement = document.createElement('tr');
     var thElement = document.createElement('th');
     thElement.textContent = allKiosks[j].locationName;
@@ -418,10 +462,6 @@ function printTable (){
     newTable.appendChild(trElement);
   }
 }
-
-beansNeededTable();
-baristasNeededTable();
-printTable();
 
 function submitRowToTable(event) {
   console.log(event);
@@ -446,4 +486,15 @@ function submitRowToTable(event) {
   printTable();
   //create function to print all kiosks from an array of kiosks
 }
+
+// allKiosks[0].customersPerHour();
+// allKiosks[0].cupsPerHour();
+// allKiosks[0].beansNeededForCupsPerHour();
+// allKiosks[0].poundPackagesPerHour();
+// allKiosks[0].beansPerHour();
+
+beansNeededTable();
+baristasNeededTable();
+printTable();
+
 rowForm.addEventListener('submit', submitRowToTable);
