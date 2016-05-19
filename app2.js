@@ -108,7 +108,6 @@ function totalsDailyPerHour (){
   // one to grab the first item of the line
 }
 
-
 function printTable (){
   var trElement = document.createElement('tr');
   var thElement = document.createElement('th');
