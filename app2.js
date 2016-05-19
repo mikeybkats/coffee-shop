@@ -150,7 +150,6 @@ function totalsDailyPerHour (){
 
 pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
 pikePlace.cupsPerHour = calcCupsPerHour(pikePlace.customersPerHour, pikePlace.avgCupsPerCustomer);
-pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
 pikePlace.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(pikePlace.cupsPerHour);
 pikePlace.poundPackagesPerHour = calcPoundPackagesPerHour(pikePlace.customersPerHour, pikePlace.avgPoundsPerCustomer);
 pikePlace.beansPerHour = calcBeansPerHour(pikePlace.beansNeededForCupsPerHour, pikePlace.poundPackagesPerHour);
@@ -444,7 +443,11 @@ function printTable (){
   newTable.appendChild(trElement);
 
   for ( var j = 0; j < allKiosks.length; j++){
-
+    // allKiosks[j].customersPerHour();
+    // allKiosks[j].cupsPerHour();
+    // allKiosks[j].beansNeededForCupsPerHour();
+    // allKiosks[j].poundPackagesPerHour();
+    // allKiosks[j].beansPerHour();
     var trElement = document.createElement('tr');
     var thElement = document.createElement('th');
     thElement.textContent = allKiosks[j].locationName;
@@ -487,11 +490,7 @@ function submitRowToTable(event) {
   //create function to print all kiosks from an array of kiosks
 }
 
-// allKiosks[0].customersPerHour();
-// allKiosks[0].cupsPerHour();
-// allKiosks[0].beansNeededForCupsPerHour();
-// allKiosks[0].poundPackagesPerHour();
-// allKiosks[0].beansPerHour();
+
 
 beansNeededTable();
 baristasNeededTable();
