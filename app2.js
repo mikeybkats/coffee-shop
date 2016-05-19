@@ -4,12 +4,15 @@ var capHill = new CoffeeKiosk('Capitol Hill', 12, 28, 3.2, .03);
 var spl = new CoffeeKiosk('Seattle Public Library', 9, 45, 2.6, .02);
 var slu = new CoffeeKiosk('South Lake Union', 5, 18, 1.3, .04);
 var sta = new CoffeeKiosk('Sea-Tac Airport', 28, 44, 1.1, .41);
-var kioskTable = document.getElementById(('kioskTable'));
-var employeesTable = document.getElementById(('employeesTable'));
-var trElement = document.createElement('tr');
+var kioskTable = document.getElementById('kioskTable');
+var employeesTable = document.getElementById('employeesTable');
+var newTable = document.getElementById('newTable');
+var newLocationForm = document.getElementById('rowForm');
+//var trElement = document.createElement('tr');
 var headings = [' '] + hours;
-var pikePlaceRow = [];
-var arrayTableContent = [];
+var allKiosks = [pikePlace, capHill, spl, slu, sta];
+var baristaHoursTotals = [];
+var beansNeededHourTotals = [];
 
 function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer){
   this.locationName = locationName;
@@ -27,8 +30,8 @@ function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsP
   this.dailyPoundPackagesTotal = 0;
   this.dailyBeansNeeded = 0;
   this.employeesNeeded = [];
+  this.dailyHourlyBeans = 0;
 };
-
 function calcCustomersPerHour(min, max){
   var custPerHour = [];
   for (var i = 0; i < hours.length; i++ ) {
@@ -86,7 +89,7 @@ function calcLocTotDaily(arrayInput){
   for (var i = 0; i < arrayInput.length; i++){
     var total = total + arrayInput[i];
   }
-  console.log(total);
+  beansNeededHourTotals.push(total);
   return parseFloat((total).toFixed(1));
 }
 function calcLocTotDailyBaristas(arrayInput){
@@ -94,7 +97,7 @@ function calcLocTotDailyBaristas(arrayInput){
   for (var i = 0; i < arrayInput.length; i++){
     var total = total + arrayInput[i];
   }
-  console.log(total);
+  baristaHoursTotals.push(total);
   return parseFloat((total / 7.5).toFixed(1));
 }
 function totalsDailyPerHour (){
@@ -105,39 +108,40 @@ function totalsDailyPerHour (){
 
 pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
 pikePlace.cupsPerHour = calcCupsPerHour(pikePlace.customersPerHour, pikePlace.avgCupsPerCustomer);
+pikePlace.customersPerHour = calcCustomersPerHour(pikePlace.minCustomersHour, pikePlace.maxCustomersHour);
 pikePlace.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(pikePlace.cupsPerHour);
 pikePlace.poundPackagesPerHour = calcPoundPackagesPerHour(pikePlace.customersPerHour, pikePlace.avgPoundsPerCustomer);
 pikePlace.beansPerHour = calcBeansPerHour(pikePlace.beansNeededForCupsPerHour, pikePlace.poundPackagesPerHour);
 pikePlace.employeesNeeded = calcNumberOfEmployees(pikePlace.customersPerHour);
-
+pikePlace.dailyHourlyBeans = calcLocTotDaily(pikePlace.beansPerHour);
 capHill.customersPerHour = calcCustomersPerHour(capHill.minCustomersHour, capHill.maxCustomersHour);
 capHill.cupsPerHour = calcCupsPerHour(capHill.customersPerHour, capHill.avgCupsPerCustomer);
 capHill.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(capHill.cupsPerHour);
 capHill.poundPackagesPerHour = calcPoundPackagesPerHour(capHill.customersPerHour, capHill.avgPoundsPerCustomer);
 capHill.beansPerHour = calcBeansPerHour(capHill.beansNeededForCupsPerHour, capHill.poundPackagesPerHour);
 capHill.employeesNeeded = calcNumberOfEmployees(capHill.customersPerHour);
-
+capHill.dailyHourlyBeans = calcLocTotDaily(capHill.beansPerHour);
 spl.customersPerHour = calcCustomersPerHour(spl.minCustomersHour, spl.maxCustomersHour);
 spl.cupsPerHour = calcCupsPerHour(spl.customersPerHour, spl.avgCupsPerCustomer);
 spl.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(spl.cupsPerHour);
 spl.poundPackagesPerHour = calcPoundPackagesPerHour(spl.customersPerHour, spl.avgPoundsPerCustomer);
 spl.beansPerHour = calcBeansPerHour(spl.beansNeededForCupsPerHour, spl.poundPackagesPerHour);
 spl.employeesNeeded = calcNumberOfEmployees(spl.customersPerHour);
-
+spl.dailyHourlyBeans = calcLocTotDaily(spl.beansPerHour);
 slu.customersPerHour = calcCustomersPerHour(slu.minCustomersHour, slu.maxCustomersHour);
 slu.cupsPerHour = calcCupsPerHour(slu.customersPerHour, slu.avgCupsPerCustomer);
 slu.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(slu.cupsPerHour);
 slu.poundPackagesPerHour = calcPoundPackagesPerHour(slu.customersPerHour, slu.avgPoundsPerCustomer);
 slu.beansPerHour = calcBeansPerHour(slu.beansNeededForCupsPerHour, slu.poundPackagesPerHour);
 slu.employeesNeeded = calcNumberOfEmployees(slu.customersPerHour);
-
+slu.dailyHourlyBeans = calcLocTotDaily(slu.beansPerHour);
 sta.customersPerHour = calcCustomersPerHour(sta.minCustomersHour, sta.maxCustomersHour);
 sta.cupsPerHour = calcCupsPerHour(sta.customersPerHour, sta.avgCupsPerCustomer);
 sta.beansNeededForCupsPerHour = calcBeansNeededForCupPerHour(sta.cupsPerHour);
 sta.poundPackagesPerHour = calcPoundPackagesPerHour(sta.customersPerHour, sta.avgPoundsPerCustomer);
 sta.beansPerHour = calcBeansPerHour(sta.beansNeededForCupsPerHour, sta.poundPackagesPerHour);
 sta.employeesNeeded = calcNumberOfEmployees(sta.customersPerHour);
-
+sta.dailyHourlyBeans = calcLocTotDaily(sta.beansPerHour);
 function beansNeededTable(){
   // table row one
   //function beansNeededTableR1(){
@@ -258,6 +262,7 @@ function beansNeededTable(){
   }
   kioskTable.appendChild(trElement);
 }
+
 function baristasNeededTable(){
   // create a table to post the store data
   // table row one - hours
@@ -379,5 +384,65 @@ function baristasNeededTable(){
   employeesTable.appendChild(trElement);
 }
 
+function printTable (){
+  var trElement = document.createElement('tr');
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+
+  var thElement = document.createElement('th');
+  trElement.appendChild(thElement);
+  thElement.textContent = 'Totals';
+
+  for (var i = 0; i < headings.length; i++){
+    var thElement = document.createElement('th');
+    thElement.textContent = hours[i];
+    trElement.appendChild(thElement);
+  }
+  newTable.appendChild(trElement);
+
+  for ( var j = 0; j < allKiosks.length; j++){
+    var trElement = document.createElement('tr');
+    var thElement = document.createElement('th');
+    thElement.textContent = allKiosks[j].locationName;
+    trElement.appendChild(thElement);
+
+    var thElement = document.createElement('th');
+    trElement.appendChild(thElement);
+    thElement.textContent = allKiosks[j].dailyHourlyBeans;
+
+    for (var i = 0; i < hours.length; i++){
+      var thElement = document.createElement ('th');
+      thElement.textContent = allKiosks[j].beansPerHour[i];
+      trElement.appendChild(thElement);
+    }
+    newTable.appendChild(trElement);
+  }
+}
+
+function submitRowToTable(event) {
+  console.log(event);
+  event.preventDefault();
+
+  var locationName = event.target.locName.value;
+  var minHr = event.target.minHr.value;
+  var maxHr = event.target.maxHr.value;
+  var cupsCust = event.target.cupsCust.value;
+  var pounds = event.target.pounds.value;
+
+  if (locationName === null){ locationName = 0; }
+  if (minHr === null){ minHr = 0; }
+  if (maxHr === null){ maxHr = 0; }
+  if (cupsCust === null){ cupsCust = 0;}
+  if (pounds === null){ pounds = 0; }
+
+  var formKiosk = new CoffeeKiosk(locationName, minHr, maxHr, cupsCust, pounds);
+  console.log(formKiosk);
+
+  allKiosks.push(formKiosk);
+  //create function to print all kiosks from an array of kiosks
+}
+rowForm.addEventListener('submit', submitRowToTable);
+
 beansNeededTable();
 baristasNeededTable();
+printTable();

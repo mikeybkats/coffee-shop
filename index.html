@@ -6,19 +6,34 @@
   </head>
 
   <body>
-    <ul id="pike">PIKE PLACE MARKET
-      <li id="pikeOne"></li>
-    </ul>
+    <table id="kioskTable" class="table"><h2>Beans needed by location Each Day</h2></table>
 
-    <p>--------------</p>
-    <ul id="capitol">CAPITOL HILL</ul>
-    <p>--------------</p>
-    <ul id="spl">SEATTLE PUBLIC LIBRARY</ul>
-    <p>--------------</p>
-    <ul id="slu">SOUTH LAKE UNION</ul>
-    <p>--------------</p>
-    <ul id="seatac">SEA-TAC AIRPORT</ul>
+    <table id="employeesTable" class="table"><h2>Baristas needed by location Each Day</h2></table>
+
+    <form id="rowForm">
+      <fieldset>
+        <legend>submit new store</legend>
+
+        <label for="New Location Name">New Location Name</label>
+        <input name="locName" type="text" />
+
+        <label for="minHr">Min Cust Per Hour</label>
+        <input name="minHr" type="text" />
+
+        <label for="maxHr">Max Cust Per Hour</label>
+        <input name="maxHr" type="text" />
+
+        <label for="cupsCust">Cups Per Customer Per Hour</label>
+        <input name="cupsCust" type="text" />
+
+        <label for="pounds">Pounds of Beans to-go Per Hour</label>
+        <input name="pounds" type="text" />
+
+        <button id="submitButton" type="submit">add store</button>
+      </fieldset>
+
 
     <script src="app.js"></script>
+
   </body>
 </html>
