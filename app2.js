@@ -419,6 +419,10 @@ function printTable (){
   }
 }
 
+beansNeededTable();
+baristasNeededTable();
+printTable();
+
 function submitRowToTable(event) {
   console.log(event);
   event.preventDefault();
@@ -439,10 +443,7 @@ function submitRowToTable(event) {
   console.log(formKiosk);
 
   allKiosks.push(formKiosk);
+  printTable();
   //create function to print all kiosks from an array of kiosks
 }
 rowForm.addEventListener('submit', submitRowToTable);
-
-beansNeededTable();
-baristasNeededTable();
-printTable();
