@@ -216,7 +216,7 @@ function printEmployeesPerHourTable (){
   employeesTable.appendChild(trElement); // end totals label
 
   // var thElement = document.createElement('th');
-  // thElement.textContent = Math.round(totalsAllStoresDailyEmployeesPerHour() * 10) / 10;
+  // thElement.textContent = Math.round(allKiosks[j].employeesNeeded() * 10) / 10;
   // trElement.appendChild(thElement);
   // employeesTable.appendChild(trElement);
 
@@ -264,6 +264,7 @@ function submitRowToTable(event) {
 
   allKiosks.push(formKiosk);
   printBeansPerHourTable();
+  printEmployeesPerHourTable();
 }
 
 printBeansPerHourTable();
