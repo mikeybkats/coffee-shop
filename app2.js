@@ -13,6 +13,7 @@ var allKiosks = [pikePlace, capHill, spl, slu, sta];
 var baristaHoursTotals = [];
 var beansNeededHourTotals = [];
 var finalTotals = [];
+var finalEmployeeTotals = [];
 
 function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsPerCustomer, avgPoundsPerCustomer){
   this.locationName = locationName;
@@ -20,7 +21,6 @@ function CoffeeKiosk (locationName, minCustomersHour, maxCustomersHour, avgCupsP
   this.maxCustomersHour = maxCustomersHour;
   this.avgCupsPerCustomer = avgCupsPerCustomer;
   this.avgPoundsPerCustomer = avgPoundsPerCustomer;
-  //this.customersPerHour = [];
   this.beansPerHour = [];
   this.poundPackagesPerHour = [];
   this.dailyCustomersTotal = 0;
@@ -100,7 +100,7 @@ function calcLocTotDaily(arrayInput){
   for (var i = 0; i < arrayInput.length; i++){
     var total = total + arrayInput[i];
   }
-  beansNeededHourTotals.push(total);
+  //  beansNeededHourTotals.push(total);
   return parseFloat((total).toFixed(1));
 }
 
@@ -135,7 +135,6 @@ function printBeansPerHourTable (){
     var thElement = document.createElement('th'); // create th data location
     trElement.appendChild(thElement); // append content to th data
     thElement.textContent = allKiosks[j].locationName; // create content for location th data
-
     var thElement = document.createElement('th'); // create new th data location
     trElement.appendChild(thElement); // appends content to th element for totals row
     thElement.textContent = allKiosks[j].dailyHourlyBeans(); // defines the content for th element above - an array
@@ -196,7 +195,6 @@ function printEmployeesPerHourTable (){
     var thElement = document.createElement('th'); // create th data location
     trElement.appendChild(thElement); // append content to th data
     thElement.textContent = allKiosks[j].locationName; // create content for location th data
-
     var thElement = document.createElement('th'); // create new th data location
     trElement.appendChild(thElement); // appends content to th element for totals row
     thElement.textContent = allKiosks[j].calcLocTotDailyBaristas(); // defines the content for th element above - an array
@@ -215,22 +213,25 @@ function printEmployeesPerHourTable (){
   trElement.appendChild(thElement);
   employeesTable.appendChild(trElement); // end totals label
 
-  // var thElement = document.createElement('th');
-  // thElement.textContent = Math.round(allKiosks[j].employeesNeeded() * 10) / 10;
-  // trElement.appendChild(thElement);
-  // employeesTable.appendChild(trElement);
-
-  for (var i = 0; i < hours.length; i++) {
-    var sum = 0;
-    for (var j = 0; j < allKiosks.length; j++) {
-      sum += Math.round(((allKiosks[j].customersPerHour()[i]) * 10 ) / 10 );
-    }
-    finalTotals.push(sum);
+  for (var i = 0; i < allKiosks.length; i++){
+    var total = 0;
+    var thElement = document.createElement('th');
+    total = total + allKiosks[i].calcLocTotDailyBaristas();
   }
-
+  thElement.textContent = total;
+  trElement.appendChild(thElement);
+  employeesTable.appendChild(trElement);
+  for (var i = 0; i < hours.length; i++) {
+    var sumOfEmployes = 0;
+    for (var j = 0; j < allKiosks.length; j++) {
+      sumOfEmployes += allKiosks[j].employeesNeeded()[i];
+    }
+    finalEmployeeTotals.push(sumOfEmployes);
+  }
+  console.log(sumOfEmployes);
   for (var i = 0; i < hours.length; i++){
     var thElement = document.createElement('th');
-    thElement.textContent = finalTotals[i];
+    thElement.textContent = finalEmployeeTotals[i];
     trElement.appendChild(thElement);
   }
 
@@ -238,30 +239,15 @@ function printEmployeesPerHourTable (){
 function submitRowToTable(event) {
   // console.log(event);
   event.preventDefault();
-
   document.getElementById('beansPerHourTable').innerHTML = '';
   document.getElementById('employeesTable').innerHTML = '';
-
   var locationName = event.target.locName.value;
-  var minHr = parseInt(event.target.minHr.value);
-  var maxHr = parseInt(event.target.maxHr.value);
-  var cupsCust = parseInt(event.target.cupsCust.value);
-  var pounds = parseInt(event.target.pounds.value);
-
-  console.log(locationName);
-  console.log(event.target.minHr.value);
-  console.log(parseInt(event.target.minHr.value));
-
-  if (locationName === ''){ locationName = ' - '; }
-  if (minHr === '' || minHr === NaN){ minHr = 0; }
-  if (maxHr === '' || maxHr === NaN){ maxHr = 0; }
-  if (cupsCust === '' || cupsCust === NaN){ cupsCust = 0;}
-  if (pounds === '' || pounds === NaN){ pounds = 0; }
-
+  var minHr = parseInt(event.target.minHr.value) || 0;
+  var maxHr = parseInt(event.target.maxHr.value) || 0;
+  var cupsCust = parseInt(event.target.cupsCust.value) || 0;
+  var pounds = parseInt(event.target.pounds.value) || 0;
   var formKiosk = new CoffeeKiosk(locationName, minHr, maxHr, cupsCust, pounds);
-
   console.log(formKiosk);
-
   allKiosks.push(formKiosk);
   printBeansPerHourTable();
   printEmployeesPerHourTable();
