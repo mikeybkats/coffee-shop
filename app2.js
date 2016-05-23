@@ -123,7 +123,7 @@ function printBeansPerHourTable (){
   trElement.appendChild(thElement);
   thElement.textContent = 'Totals';
 
-  for (var i = 0; i < headings.length; i++){
+  for (var i = 0; i < hours.length; i++){
     var thElement = document.createElement('th');
     thElement.textContent = hours[i];
     trElement.appendChild(thElement);
@@ -183,7 +183,7 @@ function printEmployeesPerHourTable (){
   trElement.appendChild(thElement);
   thElement.textContent = 'Totals';
 
-  for (var i = 0; i < headings.length; i++){
+  for (var i = 0; i < hours.length; i++){
     var thElement = document.createElement('th');
     thElement.textContent = hours[i];
     trElement.appendChild(thElement);
