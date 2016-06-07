@@ -81,6 +81,11 @@ p {
   min-height: 75px;
 }
 
+.small-logo {
+	max-width: 50px;
+	padding-bottom: 15px;
+}
+
 .nav-content {
   padding-top: 18px;
 }
