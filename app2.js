@@ -206,7 +206,7 @@ function printEmployeesPerHourTable (){
     employeesTable.appendChild(trElement);
   }
 
-  // totals column
+  // draw totals column
   var trElement = document.createElement('tr'); // totals label
   var thElement = document.createElement('th');
   thElement.textContent = 'Totals';
